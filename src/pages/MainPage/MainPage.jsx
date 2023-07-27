@@ -7,7 +7,8 @@ const MainPage = () => {
     return (
         <div>
             <Header />
-            메인 페이지
+                메인 페이지
+                깃모지 테스트
             <Main1/>
         </div>
     );
