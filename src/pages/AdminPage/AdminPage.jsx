@@ -1,9 +1,12 @@
 import React from 'react';
+import Header from './../../common/Header';
+import ExpertApplicationContainer from './components/ExpertApplicationContainer';
 
 const AdminPage = () => {
     return (
-        <div>
-            어드민
+        <div className="AdminPage">
+            <Header/>
+            <ExpertApplicationContainer/>
         </div>
     );
 };
