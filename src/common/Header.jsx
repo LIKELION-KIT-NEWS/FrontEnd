@@ -7,8 +7,8 @@ const Header = () => {
   return (
     <div className="Header">
       <img
-        id="headerLogo"
         src={process.env.PUBLIC_URL + "/assets/logo.png"}
+        style={{ width: "30%", cursor: "pointer" }}
         alt="logo"
         onClick={() => navigate("/")}
       />
@@ -20,8 +20,8 @@ const Header = () => {
       />
       <button id="submit" type="submit">
         <img
-          id="search"
           src={process.env.PUBLIC_URL + "/assets/search.png"}
+          style={{ width: "90%", cursor: "pointer" }}
           alt="submitBtn"
         />
       </button>
