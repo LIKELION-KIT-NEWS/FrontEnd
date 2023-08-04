@@ -1,8 +1,7 @@
 import React from "react";
-import "./MainPage.css";
-import Nav from "./navigation/Nav";
 import Header from "./../../common/Header";
-import ArticleContainer from "./article-container/ArticleContainer";
+import Nav from "./components/navigation/Nav";
+import ArticleContainer from "./../../common/article-container/ArticleContainer";
 
 const MainPage = () => {
   return (

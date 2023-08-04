@@ -42,6 +42,7 @@
   color: rgb(154, 154, 154);
   text-decoration: underline;
   margin-right: 0.5em;
+  cursor: pointer;
 }
 
 /* 기사 내용 */
@@ -91,4 +92,18 @@
 .dropdown-container {
   text-align: right;
   padding: 0 0.2em;
+}
+
+.deleteBtn {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 0.5em;
+}
+
+.deleteBtn span {
+  background-color: #fbe1c2;
+  padding: 0.3em 1em;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
