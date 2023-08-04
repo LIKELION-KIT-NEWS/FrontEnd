@@ -6,7 +6,7 @@ import MyScrap from './components/MyScrap';
 
 const MyPage = () => {
     return (
-        <div>
+        <div className="MyPage">
             <Header/>
             <SemiProfile/>
             <DetailProfile/>

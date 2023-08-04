@@ -1,6 +1,6 @@
 import React from 'react';
 import "./styles/MyScrap.css";
-import ScrapData from './ScrapData';
+import ScrapData from './components/ScrapData';
 
 const MyScrap = () => {
     return (
