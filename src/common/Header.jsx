@@ -7,6 +7,7 @@ const Header = () => {
   return (
     <div className="Header">
       <img
+        id="headerLogo"
         src={process.env.PUBLIC_URL + "/assets/logo.png"}
         alt="logo"
         onClick={() => navigate("/")}
