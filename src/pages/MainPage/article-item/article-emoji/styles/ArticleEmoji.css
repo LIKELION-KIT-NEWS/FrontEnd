@@ -1,0 +1,8 @@
+.article-emoji-item {
+  margin-right: 0.6em;
+}
+
+.article-emoji-item span {
+  display: block;
+  cursor: pointer;
+}
