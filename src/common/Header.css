@@ -14,6 +14,7 @@
 #menu {
   width: 10%;
   margin-left: 1em;
+  cursor: pointer;
 }
 
 #headerInput {

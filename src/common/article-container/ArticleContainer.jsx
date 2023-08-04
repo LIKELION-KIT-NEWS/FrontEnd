@@ -99,7 +99,7 @@ const Article = () => {
   return text.map((item) => {
     return (
       <div style={{ marginBottom: "1em" }}>
-        <ArticleItem content={item} />
+        <ArticleItem content={item} deleteView="none" />
       </div>
     );
   });

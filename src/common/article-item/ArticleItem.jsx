@@ -8,10 +8,10 @@ import {
   RiThumbDownFill,
 } from "react-icons/ri";
 import "./styles/ArticleItem.css";
-import ArticleComment from "./article-comment/ArticleComment";
-import ArticleEmoji from "./article-emoji/ArticleEmoji";
+import ArticleComment from "./components/article-comment/ArticleComment";
+import ArticleEmoji from "./components/article-emoji/ArticleEmoji";
 
-const ArticleItem = ({ content }) => {
+const ArticleItem = ({ content, deleteView }) => {
   const [view, setView] = useState(false);
 
   return (
@@ -68,6 +68,9 @@ const ArticleItem = ({ content }) => {
             >
               <RiArrowDropUpLine size="2.5em" color="#325F95" />
             </span>
+          </div>
+          <div className="deleteBtn" style={{ display: `${deleteView}` }}>
+            <span>삭제</span>
           </div>
         </div>
       ) : (

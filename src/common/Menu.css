@@ -1,0 +1,55 @@
+.container {
+  z-index: 5;
+  position: fixed;
+  top: 0;
+  background-color: #ffffffbc;
+  display: flex;
+  justify-content: right;
+  width: 390px;
+}
+
+.menu-bar {
+  width: 238px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: -2px 0 2px rgb(237, 237, 237);
+  padding: 0.5em;
+}
+
+.close {
+  display: flex;
+  justify-content: left;
+}
+
+.close span {
+  cursor: pointer;
+}
+
+.profile {
+  border-bottom: 1px solid rgb(182, 182, 182);
+  display: flex;
+  align-items: center;
+  padding: 0 0.5em 1em 0.5em;
+}
+
+.profile-info {
+  margin-left: 1em;
+}
+
+.profile-info > span:last-child {
+  color: #bebebe;
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 1em;
+}
+
+.category {
+  padding: 1.5em 1em;
+}
+
+.category span {
+  display: block;
+  text-align: left;
+  margin-bottom: 1.5em;
+  cursor: pointer;
+}
