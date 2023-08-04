@@ -1,10 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="Header">
-      <img src={process.env.PUBLIC_URL + "/assets/logo.png"} alt="logo" />
+      <img
+        src={process.env.PUBLIC_URL + "/assets/logo.png"}
+        alt="logo"
+        onClick={() => navigate("/")}
+      />
       <input
         type="text"
         id="headerInput"
