@@ -1,0 +1,37 @@
+.article-comment {
+  margin-top: 1em;
+  max-height: 15em;
+  overflow-y: scroll;
+}
+
+.article-comment > div:last-child {
+  border-bottom: 1px solid rgb(215, 215, 215);
+}
+
+.comment-item {
+  border-top: 1px solid rgb(215, 215, 215);
+  padding: 0.8em 0.5em;
+}
+
+.comment-item > span {
+  display: block;
+  text-align: left;
+}
+
+.comment-item > span:first-child {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 0.5em;
+}
+
+.comment-thumbs {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.comment-thumbs span {
+  font-size: small;
+  margin-right: 0.4em;
+  cursor: pointer;
+}

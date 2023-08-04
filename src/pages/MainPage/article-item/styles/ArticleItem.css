@@ -1,0 +1,94 @@
+.article-list {
+  box-shadow: 0px 2px 3px 2px rgb(225, 225, 225);
+  padding: 1em;
+  font-weight: bold;
+  border-radius: 10px;
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown {
+  cursor: pointer;
+}
+
+.article-item {
+  border: 1px solid #325f95;
+  border-radius: 10px;
+  margin-top: 1em;
+  padding: 0 0.78em;
+}
+
+.article-title {
+  text-align: left;
+  border-bottom: 1px solid rgb(215, 215, 215);
+  padding: 0.8em;
+  font-weight: bold;
+}
+
+/* 기사 링크 */
+.article-link {
+  text-align: right;
+  margin-top: 0.8em;
+  font-size: small;
+}
+
+.article-link > span:first-child {
+  margin-right: 0.5em;
+}
+
+.article-link > span:last-child {
+  color: rgb(154, 154, 154);
+  text-decoration: underline;
+  margin-right: 0.5em;
+}
+
+/* 기사 내용 */
+.article-contents {
+  text-align: justify;
+  line-height: 1.3em;
+}
+
+/* 기사 공감 표현 */
+.article-emoji {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+
+.emotion {
+  display: flex;
+}
+
+/* 기사 신뢰 표현 */
+.trust {
+  display: flex;
+  align-items: center;
+}
+
+.trust > div:first-child {
+  margin-right: 0.7em;
+}
+
+.trust > div > span:last-child {
+  display: block;
+  font-size: small;
+  margin-top: 0.5em;
+}
+
+.trust-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trust-emoji > span {
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+
+.dropdown-container {
+  text-align: right;
+  padding: 0 0.2em;
+}
