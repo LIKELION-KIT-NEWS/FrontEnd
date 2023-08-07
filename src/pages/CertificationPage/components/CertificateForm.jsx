@@ -8,11 +8,11 @@ const CertificateForm = () => {
         position:"",
         division:""
     });
-    const formData = new FormData();
+   
 
     // 이미지 업로드 input의 onChange
-    const handleAddImages = (event) => {
-        const imageLists = event.target.files;
+    const handleAddImages = (e) => {
+        const imageLists = e.target.files;
         let imageUrlLists = [...showImages];
     
         for (let i = 0; i < imageLists.length; i++) {
@@ -27,9 +27,18 @@ const CertificateForm = () => {
         setShowImages(imageUrlLists);
       };
 
-    const clickSubmit = ()=>{
-        formData.append("name",)
+    const clickSubmit = (e)=>{
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("name",data.name);
+        formData.append("position",data.position);
+        formData.append("division",data.division);
+
+        //axios통신
     };
+    const handleChange = (e) => {
+        setData(e.target.value);
+      };
 
     return (
         <div className="CertificateForm">
@@ -40,19 +49,19 @@ const CertificateForm = () => {
                 <div className="formLabel">
                     이름
                 </div>
-                <input type="text" className="formData" />
+                <input type="text" className="formData" name="name" onChange={handleChange} />
             </section>
             <section className="formInfor formUnberLine">
                 <div className="formLabel">
                     소속
                 </div>
-                <input type="text" className="formData" />
+                <input type="text" className="formData" name="divison" onChange={handleChange} />
             </section>
             <section className="formInfor formUnberLine">
                 <div className="formLabel">
                     직급
                 </div>
-                <input type="text" className="formData" />
+                <input type="text" className="formData" name="position" onChange={handleChange} />
             </section>
             <section className="formInfor formUnberLine">
                 <div className="formLabel">

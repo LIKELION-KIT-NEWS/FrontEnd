@@ -35,11 +35,12 @@
 }
 .expertBtn {
   width: 3.2em;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   margin: 1em 0.5em 0.5em;
   border-radius: 20px;
   border: none;
   background-color: #fbe1c2;
+  font-family: "BMHANNAAir_ttf";
 }
 .expertBtn:hover {
   background-color: #325f95;

@@ -9,6 +9,8 @@ const ExpertApplicationContainer = () => {
             <ExpertApplication />
             <ExpertApplication />
             <ExpertApplication />
+            {/* 페이지네이션 구현 하기 */}
+
         </div>
     );
 };
