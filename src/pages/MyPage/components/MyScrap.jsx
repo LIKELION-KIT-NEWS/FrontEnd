@@ -9,7 +9,6 @@ const MyScrap = () => {
                 저장한 기사
             </section>
             <ScrapData/>
-            <ScrapData/>
         </div>
     );
 };
