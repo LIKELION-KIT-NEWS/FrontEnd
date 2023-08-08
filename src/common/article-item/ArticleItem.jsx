@@ -11,8 +11,12 @@ import "./styles/ArticleItem.css";
 import ArticleComment from "./components/article-comment/ArticleComment";
 import ArticleEmoji from "./components/article-emoji/ArticleEmoji";
 
-const ArticleItem = ({ content, deleteView }) => {
+const ArticleItem = ({ content, deleteView, expert }) => {
   const [view, setView] = useState(false);
+
+  const handleOpen = () => {
+    setView((prev) => !prev);
+  };
 
   return (
     <>
@@ -54,18 +58,20 @@ const ArticleItem = ({ content, deleteView }) => {
               <ArticleTrust reliable="yes" trustNum={content.trust.yes} />
             </div>
           </div>
+          {/* 전문가 여부가 true 면 댓글창 보임 */}
+          {expert && (
+            <div className="comment-write">
+              <input placeholder="댓글을 작성하세요"></input>
+              <button>등록</button>
+            </div>
+          )}
           <div className="article-comment">
             {content.comment.map((item) => {
               return <ArticleComment item={item} />;
             })}
           </div>
-          <div className="dropdown-container">
-            <span
-              className="dropdown"
-              onClick={() => {
-                setView((prev) => !prev);
-              }}
-            >
+          <div className="dropdown-container" onClick={handleOpen}>
+            <span className="dropdown">
               <RiArrowDropUpLine size="2.5em" color="#325F95" />
             </span>
           </div>
@@ -74,14 +80,9 @@ const ArticleItem = ({ content, deleteView }) => {
           </div>
         </div>
       ) : (
-        <div className="article-list">
+        <div className="article-list" onClick={handleOpen}>
           <span>{content.title}</span>
-          <span
-            className="dropdown"
-            onClick={() => {
-              setView((prev) => !prev);
-            }}
-          >
+          <span className="dropdown">
             <RiArrowDropDownLine size="2.5em" color="#325F95" />
           </span>
         </div>
