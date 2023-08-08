@@ -1,4 +1,5 @@
 .article-list {
+  overflow: hidden;
   box-shadow: 0px 2px 3px 2px rgb(225, 225, 225);
   padding: 1em;
   font-weight: bold;
@@ -7,6 +8,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+}
+
+.dropdown-container {
+  cursor: pointer;
 }
 
 .dropdown {
@@ -14,6 +20,7 @@
 }
 
 .article-item {
+  overflow: hidden;
   border: 1px solid #325f95;
   border-radius: 10px;
   margin-top: 1em;
@@ -106,4 +113,35 @@
   border-radius: 10px;
   font-size: 0.9rem;
   cursor: pointer;
+}
+
+/* 댓글 작성 */
+
+.comment-write {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.8em;
+}
+
+.comment-write input {
+  border: 1px solid rgb(215, 215, 215);
+  padding: 0.6em 1em;
+  border-radius: 5px;
+  width: 100%;
+  margin-right: 1em;
+}
+
+.comment-write input:focus {
+  outline: none;
+}
+
+.comment-write button {
+  background-color: #325f95;
+  color: white;
+  padding: 0.5em 0.8em;
+  border-radius: 10px;
+  cursor: pointer;
+  min-width: 50px;
+  border: none;
 }

@@ -14,6 +14,9 @@
   background-color: white;
   box-shadow: -2px 0 2px rgb(237, 237, 237);
   padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .close {
@@ -52,4 +55,13 @@
   text-align: left;
   margin-bottom: 1.5em;
   cursor: pointer;
+}
+
+.logout {
+  margin-bottom: 2.5em;
+}
+
+.logout span {
+  cursor: pointer;
+  color: rgb(233, 63, 63);
 }
