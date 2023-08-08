@@ -14,7 +14,6 @@ const ExpertApplication = ({profileImg,name,division,position}) => {
     };
 
     const openModal = ()=>{
-        console.log('zz');
         setModalShow(true);
     }
     const handleClose = ()=> setModalShow(false);

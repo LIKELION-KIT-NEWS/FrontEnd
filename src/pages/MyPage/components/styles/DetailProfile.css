@@ -50,3 +50,7 @@
 .detailCenter input {
   margin-right: 2em;
 }
+#nickName {
+  height: 100%;
+  width: 49%;
+}
