@@ -3,6 +3,7 @@ import "./styles/DetailProfile.css";
 
 const DetailProfile = () => {
     const [fixNick,setFixNick] = useState(false);
+    
     const fixNickName = ()=>{
         setFixNick(true);
     };

@@ -11,6 +11,7 @@
 }
 #expertImg {
   width: 40%;
+  cursor: pointer;
 }
 #expertImg img {
   width: 100%;
@@ -40,7 +41,6 @@
   border-radius: 20px;
   border: none;
   background-color: #fbe1c2;
-  font-family: "BMHANNAAir_ttf";
 }
 .expertBtn:hover {
   background-color: #325f95;
