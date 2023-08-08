@@ -1,8 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
 import "./styles/ExpertApplication.css";
+import ProfessorCertification from './ProfessorCertification';
 
 //props로 데이터 받아서 map으로 뿌릴 예정
 const ExpertApplication = ({profileImg,name,division,position}) => {
+    const [modalShow,setModalShow] = useState(false);
+    
     const confirmExpert = ()=>{
         alert("전문가 승인");
     };
@@ -10,9 +13,15 @@ const ExpertApplication = ({profileImg,name,division,position}) => {
         alert("전문가 거부");
     };
 
+    const openModal = ()=>{
+        console.log('zz');
+        setModalShow(true);
+    }
+    const handleClose = ()=> setModalShow(false);
+
     return (
         <div className="ExpertApplication">
-            <div id="expertImg">
+            <div id="expertImg" onClick={openModal}>
                 <img src={process.env.PUBLIC_URL + '/assets/dummyProfile.png'} alt="dummyProfile" />
             </div>
             <div id="expertProfile">
@@ -24,6 +33,7 @@ const ExpertApplication = ({profileImg,name,division,position}) => {
                         <button type="button" className="expertBtn" onClick={cancelExpert}>거부</button>
                     </div>
                 </div>
+            <ProfessorCertification show={modalShow} hide={handleClose}/>
         </div>
     );
 };
