@@ -1,12 +1,37 @@
 import React from "react";
 import "../components/styles/KakaoLogin.css";
-import { REST_API_KEY, REDIRECT_URL } from "./KakaoData";
+//import { REST_API_KEY, REDIRECT_URL } from "./KakaoData";
 
 const KakaoLogin = () => {
-  const KakaoAuothUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URL}&prompt=select_account`;
+  const KakaoAuothUrl = "http://49.50.163.215/api/login/kakao";
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     window.location.href = KakaoAuothUrl;
+    console.log("로그인 완료");
+    try {
+      const token = await extractTokenFromURL();
+      if (token) {
+        console.log("오류1");
+        localStorage.setItem("accessToken", token);
+      }
+    } catch (error) {
+      console.log("오류2");
+      console.error("오류발생:", error);
+    }
+  };
+
+  const extractTokenFromURL = async () => {
+    return new Promise((resolve, reject) => {
+      const token = window.location.search.split("=")[1];
+      console.log(token);
+      if (token) {
+        resolve(token);
+        console.log("오류4");
+      } else {
+        console.log("오류5");
+        reject(new Error("Token not found in URL"));
+      }
+    });
   };
 
   return (
