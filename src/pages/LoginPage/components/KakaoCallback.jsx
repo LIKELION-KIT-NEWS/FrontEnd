@@ -1,28 +1,28 @@
 import React, { useEffect } from "react";
 import Header from "../../../common/Header";
-import { REST_API_KEY, REDIRECT_URL } from "./KakaoData";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 const KakaoCallback = () => {
-  useEffect(() => {
-    const params = new URL(document.location.toString()).searchParams; // code를 받기 위해 URL에서 code 부분만 짤라오기
-    const code = params.get("code");
-    const grant_type = "authorization_code";
+  const location = useLocation();
+  const navigate = useNavigate;
 
-    axios // Access token / Refresh Token 받는 과정
-      .post(
-        `https://kauth.kakao.com/oauth/token?grant_type=${grant_type}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URL}&code=${code}`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          },
-        }
-      )
+  useEffect(() => {
+    const CODE = location.search.split("=")[1];
+
+    axios
+      .get(`http://localhost:3000/?token=${CODE}`)
       .then((res) => {
-        console.log(res);
+        window.location.href = `http://localhost:3000/?token=${CODE}`;
+        const ACCESS_TOKEN = location.search.split("=")[1];
+        localStorage.setItem("access_token", ACCESS_TOKEN);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
       });
-  }, []);
+  });
 
   return (
     <div>

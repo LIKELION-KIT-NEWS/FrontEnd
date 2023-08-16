@@ -1,3 +1,3 @@
-export const REST_API_KEY = "f17bc73b2377cf1f784d3ffd99dad6ed";
-export const REDIRECT_URL = "http://localhost:3000/callback";
+export const REST_API_KEY = "cb446a56d22abee61edb1a9b6f0b3206";
+export const REDIRECT_URL = "http://49.50.163.215/login/oauth2/code/kakao";
 // APP키와 Redirect_URL 따로 저장하기
