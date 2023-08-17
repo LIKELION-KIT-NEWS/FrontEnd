@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MainPage from "../../MainPage/MainPage";
 
 const KakaoCallback = () => {
   const location = useLocation();
-  //const navigate = useNavigate;
+  const navigate = useNavigate();
 
+  const CODE = location.search.split("=")[1];
+  localStorage.setItem("accessToken", CODE);
   useEffect(() => {
-    const CODE = location.search.split("=")[1];
-    // console.log(CODE);
-    localStorage.setItem("accessToken", CODE);
+    if (!localStorage.getItem("accessToken") !== null) {
+      console.log("확인완료");
+      navigate("/");
+    } else {
+      console.log("확인 실패");
+    }
   });
 
   return (
