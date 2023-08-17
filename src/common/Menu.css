@@ -1,31 +1,8 @@
-.container {
-  z-index: 5;
-  position: fixed;
-  top: 0;
-  background-color: #ffffffbc;
-  display: flex;
-  justify-content: right;
-  width: 390px;
-}
-
 .menu-bar {
-  width: 238px;
-  height: 100vh;
-  background-color: white;
-  box-shadow: -2px 0 2px rgb(237, 237, 237);
-  padding: 0.5em;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.close {
-  display: flex;
-  justify-content: left;
-}
-
-.close span {
-  cursor: pointer;
 }
 
 .profile {
@@ -58,7 +35,8 @@
 }
 
 .logout {
-  margin-bottom: 2.5em;
+  margin-bottom: 2em;
+  text-align: center;
 }
 
 .logout span {
