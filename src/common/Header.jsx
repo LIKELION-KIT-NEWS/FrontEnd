@@ -18,7 +18,7 @@ const Header = () => {
           src={process.env.PUBLIC_URL + "/assets/logo.png"}
           style={{ width: "30%", cursor: "pointer" }}
           alt="logo"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/main")}
         />
         <input
           type="text"

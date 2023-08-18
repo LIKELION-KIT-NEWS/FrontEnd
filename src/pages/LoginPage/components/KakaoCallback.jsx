@@ -11,7 +11,7 @@ const KakaoCallback = () => {
   useEffect(() => {
     if (!localStorage.getItem("accessToken") !== null) {
       console.log("확인완료");
-      navigate("/");
+      navigate("/main");
     } else {
       console.log("확인 실패");
     }
