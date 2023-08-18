@@ -8,7 +8,7 @@ import ArticleTrust from "./components/article-trust/ArticleTrust";
 
 const localhost = "http://49.50.163.215";
 const headers = {
-  "Content-Type": "application/json",
+  "Content-Type": "multipart/form-data",
 };
 
 axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
@@ -86,24 +86,34 @@ const ArticleItem = ({ content, deleteView }) => {
   };
 
   const handleCommentWrite = () => {
-    axios
-      .post(
-        `${localhost}/api/news/${content.newsId}/comment`,
-        {
-          content: commentWrite,
-        },
-        headers
-      )
-      .then(() => {
-        axios
-          .get(`${localhost}/api/news/${content.newsId}/comment`, headers)
-          .then((res) => {
-            setComment(res.data.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+    const formData = new FormData();
+    formData.append("content", commentWrite);
+
+    if (commentWrite !== null) {
+      axios
+        .post(
+          `${localhost}/api/news/${content.newsId}/comment`,
+          formData,
+          headers
+        )
+        .then((res) => {
+          console.log(res);
+          axios
+            .get(`${localhost}/api/news/${content.newsId}/comment`, headers)
+            .then((res) => {
+              setCommentWrite("");
+              setComment(res.data.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("content null");
+    }
   };
 
   return (
@@ -137,6 +147,7 @@ const ArticleItem = ({ content, deleteView }) => {
           {/* 전문가 여부가 true 면 댓글창 보임 */}
           <div className="comment-write">
             <input
+              value={commentWrite}
               placeholder="댓글을 작성하세요"
               onChange={(e) => {
                 setCommentWrite(e.target.value);
