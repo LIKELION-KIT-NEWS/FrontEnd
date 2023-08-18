@@ -110,8 +110,8 @@ const ScrapData = () => {
   useEffect(()=>{
     axios.get(`http://49.50.163.215/api/news/clip`,null,headers)
     .then((res)=>{
-      console.log(res.data);
-      setData(res.data);
+      console.log(res.data.data);
+      setData(res.data.data);
     })
     .catch((err)=>{
       console.log(err);
@@ -120,11 +120,15 @@ const ScrapData = () => {
     return (
         <div className="ScrapData">
             {/* 메인 게시글에서 사용한 템플릿 그대로 사용하기 */}
-            <ArticleContainer
-                article={text.articleList}
+            {
+              data.length===0?
+              "저장한 기사가 없어요":
+              <ArticleContainer
+                article={data}
                 deleteView="none"
-                expert={text.expert}
-            />
+            />  
+            }
+            
         </div>
     );
 };
