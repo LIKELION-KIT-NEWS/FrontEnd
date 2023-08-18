@@ -6,7 +6,7 @@ const CertificateForm = () => {
   const [showImages, setShowImages] = useState([]);
   axios.defaults.headers.common[
     "Authorization"
-  ] = `Bearer ${localStorage.getItem("access_token")}`;
+  ] = `Bearer ${localStorage.getItem("accessToken")}`;
   const [data, setData] = useState({
     job: "",
     company: "",
