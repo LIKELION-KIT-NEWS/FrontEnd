@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import "./styles/ScrapData.css";
 import ArticleContainer from "../../../../common/article-container/ArticleContainer";
+import axios from 'axios';
 
 const text = {
     expert: true, // 전문가 여부
@@ -100,6 +101,22 @@ const text = {
   };
 
 const ScrapData = () => {
+  const [data,setData] = useState([]);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("accessToken")}`;
+  const headers = {
+    'Content-Type' : 'application/json',
+};
+
+  useEffect(()=>{
+    axios.get(`http://49.50.163.215/api/news/clip`,null,headers)
+    .then((res)=>{
+      console.log(res.data);
+      setData(res.data);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  },[])
     return (
         <div className="ScrapData">
             {/* 메인 게시글에서 사용한 템플릿 그대로 사용하기 */}

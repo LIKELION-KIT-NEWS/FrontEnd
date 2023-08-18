@@ -4,14 +4,14 @@ import axios from 'axios';
 
 const CertificateForm = () => {
     const [showImages, setShowImages] = useState([]);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access_token")}`;
     const [data,setData] = useState({
         job:"",
         company:"",
         businessType:""
     });
     const headers = {
-        'Content-Type' : 'application/json',
-        'Authorization' : "Bearer "+ localStorage.getItem("accessToken")
+        'Content-Type' : 'multipart/form-data',
     };
    
 
@@ -38,7 +38,7 @@ const CertificateForm = () => {
         formData.append("job",data.job);
         formData.append("company",data.company);
         formData.append("businessType",data.businessType);
-        formData.append("education","");
+        formData.append("education",null);
 
         //axios통신
         axios.post(`http://49.50.163.215/api/register/expert`,
