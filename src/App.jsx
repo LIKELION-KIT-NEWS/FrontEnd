@@ -5,9 +5,9 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import MyPage from "./pages/MyPage/MyPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import Callback from "./pages/LoginPage/components/KakaoCallback";
-import CertificationPage from './pages/CertificationPage/CertificationPage';
+import CertificationPage from "./pages/CertificationPage/CertificationPage";
 
-function App() {  
+function App() {
   return (
     <div className="App">
       <Routes>

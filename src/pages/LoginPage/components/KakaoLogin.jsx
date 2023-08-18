@@ -1,9 +1,9 @@
 import React from "react";
 import "../components/styles/KakaoLogin.css";
-import { REST_API_KEY, REDIRECT_URL } from "./KakaoData";
+//import { REST_API_KEY, REDIRECT_URL } from "./KakaoData";
 
 const KakaoLogin = () => {
-  const KakaoAuothUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URL}&prompt=select_account`;
+  const KakaoAuothUrl = "http://49.50.163.215/api/login/kakao";
 
   const handleLogin = () => {
     window.location.href = KakaoAuothUrl;

@@ -1,33 +1,28 @@
 import React, { useEffect } from "react";
-import Header from "../../../common/Header";
-import { REST_API_KEY, REDIRECT_URL } from "./KakaoData";
-import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import MainPage from "../../MainPage/MainPage";
 
 const KakaoCallback = () => {
-  useEffect(() => {
-    const params = new URL(document.location.toString()).searchParams; // code를 받기 위해 URL에서 code 부분만 짤라오기
-    const code = params.get("code");
-    const grant_type = "authorization_code";
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    axios // Access token / Refresh Token 받는 과정
-      .post(
-        `https://kauth.kakao.com/oauth/token?grant_type=${grant_type}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URL}&code=${code}`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      });
-  }, []);
+  const CODE = location.search.split("=")[1];
+  localStorage.setItem("accessToken", CODE);
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken") !== null) {
+      console.log("확인완료");
+      navigate("/");
+    } else {
+      console.log("확인 실패");
+    }
+  });
 
   return (
-    <div>
-      <Header />
-    </div>
+    <>
+      <div>
+        <MainPage />
+      </div>
+    </>
   );
 };
 
