@@ -1,33 +1,28 @@
 import React, { useEffect } from "react";
-import Header from "../../../common/Header";
 import { useLocation, useNavigate } from "react-router-dom";
-
-import axios from "axios";
+import MainPage from "../../MainPage/MainPage";
 
 const KakaoCallback = () => {
   const location = useLocation();
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
+  const CODE = location.search.split("=")[1];
+  localStorage.setItem("accessToken", CODE);
   useEffect(() => {
-    const CODE = location.search.split("=")[1];
-
-    axios
-      .get(`http://localhost:3000/?token=${CODE}`)
-      .then((res) => {
-        window.location.href = `http://localhost:3000/?token=${CODE}`;
-        const ACCESS_TOKEN = location.search.split("=")[1];
-        localStorage.setItem("access_token", ACCESS_TOKEN);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!localStorage.getItem("accessToken") !== null) {
+      console.log("확인완료");
+      navigate("/");
+    } else {
+      console.log("확인 실패");
+    }
   });
 
   return (
-    <div>
-      <Header />
-    </div>
+    <>
+      <div>
+        <MainPage />
+      </div>
+    </>
   );
 };
 
