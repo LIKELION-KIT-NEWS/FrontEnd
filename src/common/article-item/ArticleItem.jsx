@@ -5,18 +5,13 @@ import ArticleComment from "./components/article-comment/ArticleComment";
 import ArticleEmoji from "./components/article-emoji/ArticleEmoji";
 import axios from "axios";
 import ArticleTrust from "./components/article-trust/ArticleTrust";
+import ConfirmModal from "../confirmModal/ConfirmModal";
 
 const localhost = "http://49.50.163.215";
-const headers = {
-  "Content-Type": "multipart/form-data",
-};
-
-axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
-  "accessToken"
-)}`;
 
 const ArticleItem = ({ content, deleteView }) => {
   const [view, setView] = useState(false);
+  const [modal, setModal] = useState(false);
   const [emotion, setEmotion] = useState({
     newsId: 0,
     emotionCounts: {
@@ -45,6 +40,13 @@ const ArticleItem = ({ content, deleteView }) => {
   const [commentWrite, setCommentWrite] = useState("");
 
   useEffect(() => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${localStorage.getItem("accessToken")}`;
+
     axios
       .get(`${localhost}/api/news/${content.newsId}/emotions`, headers)
       .then((res) => {
@@ -85,7 +87,38 @@ const ArticleItem = ({ content, deleteView }) => {
     setView((prev) => !prev);
   };
 
+  const handleModal = () => {
+    setModal((prev) => !prev);
+  };
+
+  const handleScrap = () => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${localStorage.getItem("accessToken")}`;
+
+    axios
+      .post(`${localhost}/api/news/clip/${content.newsId}`, null, headers)
+      .then((res) => {
+        console.log(res);
+        setModal(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleCommentWrite = () => {
+    const headers = {
+      "Content-Type": "multipart/form-data",
+    };
+
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${localStorage.getItem("accessToken")}`;
+
     const formData = new FormData();
     formData.append("content", commentWrite);
 
@@ -127,12 +160,24 @@ const ArticleItem = ({ content, deleteView }) => {
           <div className="article-title">
             <span>{content.title}</span>
           </div>
-          <div className="article-link">
-            <span>원문보기</span>
-            <span onClick={() => window.open(`${content.link}`)}>
-              {content.link}
-            </span>
+          <div className="article-info">
+            <div className="article-scrap">
+              <span onClick={handleScrap}>스크랩</span>
+              {modal && (
+                <ConfirmModal
+                  handleModal={handleModal}
+                  content="스크랩 되었습니다."
+                />
+              )}
+            </div>
+            <div className="article-link">
+              <span>원문보기</span>
+              <span onClick={() => window.open(`${content.link}`)}>
+                {content.link}
+              </span>
+            </div>
           </div>
+
           <div className="article-contents">
             <p>{content.summary}</p>
           </div>

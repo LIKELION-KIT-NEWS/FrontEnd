@@ -262,7 +262,12 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
               )}
             </span>
           </div>
-          {modal && <ConfirmModal handleModal={handleModal} />}
+          {modal && (
+            <ConfirmModal
+              handleModal={handleModal}
+              content="이미 공감을 표현하셨습니다."
+            />
+          )}
         </div>
       )}
     </>

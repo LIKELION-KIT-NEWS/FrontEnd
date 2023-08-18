@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./styles/ConfirmModal.css";
 
-const ConfirmModal = ({ handleModal }) => {
+const ConfirmModal = ({ handleModal, content }) => {
   useEffect(() => {
     document.body.style.cssText = `
           position: fixed; 
@@ -19,7 +19,7 @@ const ConfirmModal = ({ handleModal }) => {
     <div className="modal-container">
       <div className="modal-box">
         <div className="modal-content">
-          <span>이미 공감 표현을 하셨습니다.</span>
+          <span>{content}</span>
         </div>
         <div className="confirm" onClick={handleModal}>
           확인
