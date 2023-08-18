@@ -6,7 +6,7 @@ const CertificateForm = () => {
   const [showImages, setShowImages] = useState([]);
   axios.defaults.headers.common[
     "Authorization"
-  ] = `Bearer ${localStorage.getItem("accessToken")}`;
+  ] = `Bearer ${localStorage.getItem("access_token")}`;
   const [data, setData] = useState({
     job: "",
     company: "",
@@ -46,6 +46,8 @@ const CertificateForm = () => {
       .post(`http://49.50.163.215/api/register/expert`, formData, headers)
       .then((res) => {
         console.log(res.data);
+        alert("전문가 신청 완료");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
