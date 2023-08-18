@@ -10,12 +10,6 @@ import ConfirmModal from "../../../confirmModal/ConfirmModal";
 import axios from "axios";
 
 const localhost = "http://49.50.163.215";
-const headers = {
-  "Content-Type": "application/json",
-};
-axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
-  "accessToken"
-)}`;
 
 const ArticleComment = ({ newsId, item, setComment, user }) => {
   const [thumbs, setThumbs] = useState({
@@ -26,13 +20,18 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
   });
 
   const [update, setUpdate] = useState(false);
-  const [commentWrite, setCommentWrite] = useState("");
+  const [commentWrite, setCommentWrite] = useState(item.content);
   const [modal, setModal] = useState(false);
   const handleModal = () => {
     setModal((prev) => !prev);
   };
 
   const handleLike = (state) => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    };
+
     if (!state) {
       setThumbs({
         ...thumbs,
@@ -44,7 +43,7 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
           `${localhost}/api/news/emotion/comment/${item.commentId}`,
           headers
         )
-        .then((res) => console.log(res.data))
+        .then((res) => console.log(res))
         .catch((err) => {
           console.log(err);
         });
@@ -64,7 +63,7 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
             headers
           )
           .then((res) => {
-            console.log(res.data);
+            console.log(res);
           })
           .catch((err) => {
             console.log(err);
@@ -74,6 +73,11 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
   };
 
   const handleDisLike = (state) => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    };
+
     if (!state) {
       setThumbs({
         ...thumbs,
@@ -86,7 +90,7 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
           headers
         )
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -107,7 +111,7 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
             headers
           )
           .then((res) => {
-            console.log(res.data);
+            console.log(res);
           })
           .catch((err) => {
             console.log(err);
@@ -117,30 +121,41 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
   };
 
   const commentUpdate = () => {
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    };
+    const formData = new FormData();
+    formData.append("content", commentWrite);
+
     axios
-      .patch(
+      .post(
         `${localhost}/api/news/${newsId}/comment/${item.commentId}`,
-        {
-          content: commentWrite,
-        },
-        { headers: headers }
+        formData,
+        headers
       )
-      .then(() =>
+      .then(() => {
         axios
           .get(`${localhost}/api/news/${newsId}/comment`, headers)
           .then((res) => {
             setComment(res.data.data);
+            setUpdate(false);
           })
           .catch((err) => {
             console.log(err);
-          })
-      )
+          });
+      })
       .catch((err) => {
         console.log(err);
       });
   };
 
   const commentDelete = () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    };
+
     axios
       .delete(
         `${localhost}/api/news/${newsId}/comment/${item.commentId}`,
@@ -179,7 +194,7 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
           </div>
           <div className="comment-write" style={{ marginTop: "1em" }}>
             <input
-              value={item.content}
+              value={commentWrite}
               onChange={(e) => {
                 setCommentWrite(e.target.value);
               }}
