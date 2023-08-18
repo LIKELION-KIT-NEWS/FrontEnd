@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react";
-import "./Menu.css";
-import { MdAccountCircle, MdOutlineClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { MdAccountCircle } from "react-icons/md";
+import { GrFormClose } from "react-icons/gr";
+import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./Menu.css";
 import axios from "axios";
 
-const Menu = ({ handleOpen }) => {
-  const navigate = useNavigate();
+const localhost = "http://49.50.163.215";
 
-  const [userInfo, setUserInfo] = useState([]);
+const headers = {
+  "Content-Type": "application/json",
+  Authorization: "Bearer " + localStorage.getItem("accessToken"),
+};
 
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${localStorage.getItem("accessToken")}`;
-
-  const headers = {
-    "Content-Type": "application/json",
-  };
-
-  axios
-    .get("http://49.50.163.215/api/user-info", {
-      headers: headers,
-    })
-    .then((res) => {
-      setUserInfo(res.data);
-      //console.log(userInfo);
-    });
+const Menu = ({ open, setOpen }) => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    nickname: "",
+  });
+  const handleClose = () => setOpen(false);
+  const naviagate = useNavigate();
 
   useEffect(() => {
     document.body.style.cssText = `
@@ -39,22 +35,24 @@ const Menu = ({ handleOpen }) => {
     };
   }, []);
 
-  const handleLogout = () => {
-    window.localStorage.removeItem("accessToken");
-    navigate("/");
-  };
-
-  const Mypage = () => {
-    navigate("/My");
-  };
+  useEffect(() => {
+    axios
+      .get(`${localhost}/api/user-info`, headers)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
-    <div className="container">
-      <div className="menu-bar">
+    <div className="menu-container">
+      <div className={open ? "menu-bar-fade-in" : "menu-bar-fade-out"}>
         <div>
-          <div className="close">
-            <span onClick={handleOpen}>
-              <MdOutlineClose color="rgb(182, 182, 182)" size="20px" />
+          <div className="menu-close">
+            <span onClick={handleClose}>
+              <GrFormClose size="25px" color="red" />
             </span>
           </div>
           <div className="profile">
@@ -62,18 +60,37 @@ const Menu = ({ handleOpen }) => {
               <MdAccountCircle color="#B1B1B1" size="100px" />
             </span>
             <div className="profile-info">
-              <span>{userInfo.name}</span>
-              <span>{userInfo.email}</span>
+              <span>{user.name}</span>
+              <span>{user.email}</span>
             </div>
           </div>
           <div className="category">
-            <span onClick={Mypage}>내 정보</span>
-            <span>전문가 신청</span>
+            <span
+              onClick={() => {
+                naviagate("/my");
+              }}
+            >
+              내 정보
+            </span>
+            <span
+              onClick={() => {
+                naviagate("/certificate");
+              }}
+            >
+              전문가 신청
+            </span>
             <span>개발자 정보</span>
           </div>
         </div>
         <div className="logout">
-          <span onClick={handleLogout}>로그아웃</span>
+          <span
+            onClick={() => {
+              localStorage.clear();
+              naviagate("/login");
+            }}
+          >
+            로그아웃
+          </span>
         </div>
       </div>
     </div>
