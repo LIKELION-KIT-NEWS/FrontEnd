@@ -6,7 +6,7 @@ import axios from "axios";
 const Header = ({ setData }) => {
   axios.defaults.headers.common[
     "Authorization"
-  ] = `Bearer ${localStorage.getItem("access_token")}`;
+  ] = `Bearer ${localStorage.getItem("accessToken")}`;
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
