@@ -1,7 +1,8 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import Header from './../../common/Header';
 import ExpertApplicationContainer from './components/ExpertApplicationContainer';
 import ArticleContainer from "../../common/article-container/ArticleContainer";
+import axios from 'axios';
 
 const text = {
     expert: true, // 전문가 여부
@@ -101,14 +102,26 @@ const text = {
   };
 
 const AdminPage = () => {
+  const [data,setData] = useState([]);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("accessToken")}`;
+  
+  useEffect(()=>{
+    axios.get(`http://49.50.163.215/api/news/list/ALL`)
+    .then((res)=>{
+      console.log(res.data.data);
+      setData(res.data.data);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  },[])
     return (
         <div className="AdminPage">
             <Header/>
             <ExpertApplicationContainer/>
             <ArticleContainer
-                article={text.articleList}
-                deleteView="none"
-                expert={text.expert}
+                article={data}
+                deleteView="block"
             />>
         </div>
     );

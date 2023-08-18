@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import "./styles/ProfessorCertification.css";
 
-const ProfessorCertification = ({show,hide}) => {
+const ProfessorCertification = ({show,hide,userName,job,company,education,uid}) => {
     return (
         <Modal show={show} onHide={hide}>
           <Modal.Header>
@@ -14,17 +14,17 @@ const ProfessorCertification = ({show,hide}) => {
               <div id="nameAndTel">
                 <div>
                   <label>이름</label>
-                  <p>김금오</p>
+                  <p>{userName}</p>
                 </div>
                 <div>
                   <label>소속</label>
-                  <p>영남대학교</p>
+                  <p>{company}</p>
                 </div>
               </div>
               <div id="inputNumber">
                 <div>
                   <label>직급</label>
-                  <p>문예창작학과 교수</p>
+                  <p>{job}</p>
                 </div>
               </div>
               <div id="photoZone">

@@ -28,7 +28,7 @@ const ExpertApplicationContainer = () => {
         <div className="ExpertApplicationContainer">
             {
                 requested.map((value, index) =>
-                    <ExpertApplication userName={value.userName} job={value.job} company={value.company} education={value.education} uid={value.uid} />
+                    <ExpertApplication key={index} userName={value.userName} job={value.job} company={value.company} education={value.education} uid={value.uid} />
                 )
             }
             {/* 페이지네이션 구현 하기 */}
