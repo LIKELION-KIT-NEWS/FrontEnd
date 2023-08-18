@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./styles/Nav.css";
 import axios from "axios";
 import ArticleContainer from "../../../../common/article-container/ArticleContainer";
+import { SyncLoader } from "react-spinners";
 
 const localhost = "http://49.50.163.215";
 
@@ -15,12 +16,16 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
 const Nav = () => {
   const [click, setClick] = useState({ value: "정치", valueEng: "POLITICS" });
   const [article, setArticle] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${localhost}/api/news/list/${click.valueEng}`, headers)
       .then((res) => {
+        console.log(res.data.data);
         setArticle(res.data.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -43,12 +48,12 @@ const Nav = () => {
         {menu.map((item) => {
           return (
             <span
-              onClick={() =>
+              onClick={() => {
                 setClick({
                   value: item.value,
                   valueEng: item.valueEng,
-                })
-              }
+                });
+              }}
               style={
                 item.value === click.value
                   ? {
@@ -65,7 +70,19 @@ const Nav = () => {
           );
         })}
       </div>
-      <ArticleContainer article={article} deleteView="none" />
+      {loading ? (
+        <div className="loading">
+          <SyncLoader
+            color="#325F95"
+            loading
+            margin={5}
+            size={10}
+            speedMultiplier={1}
+          />
+        </div>
+      ) : (
+        <ArticleContainer article={article} deleteView="none" />
+      )}
     </>
   );
 };
