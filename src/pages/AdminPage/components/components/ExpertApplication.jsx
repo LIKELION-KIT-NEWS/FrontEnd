@@ -16,6 +16,7 @@ const ExpertApplication = ({userName,job,company,education,uid}) => {
         axios.post(`http://49.50.163.215/api/admin/requested/${uid}/approve`,null,headers)
         .then((res)=>{
             console.log(res.data);
+            window.location.reload();
         }).catch((err)=>{
             console.log(err);
         })
@@ -26,6 +27,7 @@ const ExpertApplication = ({userName,job,company,education,uid}) => {
         axios.post(`http://49.50.163.215/api/admin/requested/${uid}/reject`,null,headers)
         .then((res)=>{
             console.log(res.data);
+            window.location.reload();
         }).catch((err)=>{
             console.log(err);
         })
@@ -50,7 +52,7 @@ const ExpertApplication = ({userName,job,company,education,uid}) => {
                         <button type="button" className="expertBtn" onClick={cancelExpert}>거부</button>
                     </div>
                 </div>
-            <ProfessorCertification show={modalShow} hide={handleClose}/>
+            <ProfessorCertification show={modalShow} hide={handleClose}  userName={userName} job={job} company={company} education={education} uid={uid} />
         </div>
     );
 };

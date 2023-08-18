@@ -6,8 +6,16 @@ import axios from 'axios';
 const SemiProfile = () => {
     const navigate = useNavigate();
     const [data,setData] = useState([]);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("accessToken")}`;
 
     const goCertification = ()=>{
+        axios.delete(`http://49.50.163.215/api/register/expert`,null)
+        .then((res)=>{
+            console.log(res.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
         navigate("/certificate");
     };
     useEffect(()=>{

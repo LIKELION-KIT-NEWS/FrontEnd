@@ -1,31 +1,60 @@
-.container {
+.menu-container {
   z-index: 5;
   position: fixed;
   top: 0;
-  background-color: #ffffffbc;
-  display: flex;
-  justify-content: right;
-  width: 390px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #eeeeeebd;
 }
 
-.menu-bar {
-  width: 238px;
-  height: 100vh;
-  background-color: white;
-  box-shadow: -2px 0 2px rgb(237, 237, 237);
-  padding: 0.5em;
+.menu-close {
+  text-align: left;
+  padding: 1em;
+}
+
+.menu-close > span {
+  cursor: pointer;
+}
+
+@keyframes menu-slide-fade-in {
+  0% {
+    right: -300px;
+  }
+
+  100% {
+    right: 0px;
+  }
+}
+
+@keyframes menu-slide-fade-out {
+  0% {
+    right: 0px;
+  }
+
+  100% {
+    right: -300px;
+  }
+}
+
+.menu-bar-fade-in,
+.menu-bar-fade-out {
+  position: absolute;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: #ffffff;
+  width: 300px;
+  right: 0%;
 }
 
-.close {
-  display: flex;
-  justify-content: left;
+.menu-bar-fade-in {
+  animation: menu-slide-fade-in 0.35s ease;
 }
 
-.close span {
-  cursor: pointer;
+.menu-bar-fade-out {
+  animation: menu-slide-fade-out 0.35s ease;
 }
 
 .profile {
@@ -58,7 +87,8 @@
 }
 
 .logout {
-  margin-bottom: 2.5em;
+  margin-bottom: 2em;
+  text-align: center;
 }
 
 .logout span {

@@ -40,7 +40,7 @@ const Header = () => {
           onClick={handleOpen}
         />
       </div>
-      {open && <Menu handleOpen={handleOpen} />}
+      {open && <Menu open={open} setOpen={setOpen} />}
     </div>
   );
 };
