@@ -1,16 +1,34 @@
 import React,{useState} from 'react';
 import "./styles/ExpertApplication.css";
 import ProfessorCertification from './ProfessorCertification';
+import axios from 'axios';
 
 //props로 데이터 받아서 map으로 뿌릴 예정
-const ExpertApplication = ({profileImg,name,division,position}) => {
+const ExpertApplication = ({userName,job,company,education,uid}) => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("accessToken")}`;
     const [modalShow,setModalShow] = useState(false);
-    
+    const headers = {
+        'Content-Type' : 'application/json',
+    };
+
     const confirmExpert = ()=>{
         alert("전문가 승인");
+        axios.post(`http://49.50.163.215/api/admin/requested/${uid}/approve`,null,headers)
+        .then((res)=>{
+            console.log(res.data);
+        }).catch((err)=>{
+            console.log(err);
+        })
+
     };
     const cancelExpert = ()=>{
         alert("전문가 거부");
+        axios.post(`http://49.50.163.215/api/admin/requested/${uid}/reject`,null,headers)
+        .then((res)=>{
+            console.log(res.data);
+        }).catch((err)=>{
+            console.log(err);
+        })
     };
 
     const openModal = ()=>{
@@ -24,9 +42,9 @@ const ExpertApplication = ({profileImg,name,division,position}) => {
                 <img src={process.env.PUBLIC_URL + '/assets/dummyProfile.png'} alt="dummyProfile" />
             </div>
             <div id="expertProfile">
-                <h3>이금오</h3>
-                <p>금오공과대학교</p>
-                <p>화학공학과 교수</p>
+                <h3>{userName}</h3>
+                <p>{company}</p>
+                <p>{job}</p>
                     <div id="expertBtnDiv">
                         <button type="button" className="expertBtn" onClick={confirmExpert}>수락</button>
                         <button type="button" className="expertBtn" onClick={cancelExpert}>거부</button>

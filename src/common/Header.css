@@ -23,5 +23,9 @@
   color: gray;
   border: none;
   box-shadow: inset 2px 2px 2px 2px rgb(144, 144, 144);
+  text-align: left;
+}
+
+#headerInput::placeholder {
   text-align: center;
 }

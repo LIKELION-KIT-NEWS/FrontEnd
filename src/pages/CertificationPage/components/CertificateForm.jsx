@@ -1,13 +1,18 @@
 import React,{useState} from 'react';
 import "./styles/CertificateForm.css";
+import axios from 'axios';
 
 const CertificateForm = () => {
     const [showImages, setShowImages] = useState([]);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access_token")}`;
     const [data,setData] = useState({
-        name:"",
-        position:"",
-        division:""
+        job:"",
+        company:"",
+        businessType:""
     });
+    const headers = {
+        'Content-Type' : 'multipart/form-data',
+    };
    
 
     // 이미지 업로드 input의 onChange
@@ -30,14 +35,28 @@ const CertificateForm = () => {
     const clickSubmit = (e)=>{
         e.preventDefault();
         const formData = new FormData();
-        formData.append("name",data.name);
-        formData.append("position",data.position);
-        formData.append("division",data.division);
+        formData.append("job",data.job);
+        formData.append("company",data.company);
+        formData.append("businessType",data.businessType);
+        formData.append("education",null);
 
         //axios통신
+        axios.post(`http://49.50.163.215/api/register/expert`,
+        formData,
+        headers
+        ).then((res)=>{
+            console.log(res.data);
+        }).catch((err)=>{
+            console.log(err);
+        })
     };
     const handleChange = (e) => {
-        setData(e.target.value);
+        const { name, value } = e.target;
+        setData((preData)=>({
+            ...preData,
+            [name]:value,
+        }));
+        console.log(data);
       };
 
     return (
@@ -47,21 +66,21 @@ const CertificateForm = () => {
             </section>
             <section className="formInfor formUnberLine">
                 <div className="formLabel">
-                    이름
+                    직업
                 </div>
-                <input type="text" className="formData" name="name" onChange={handleChange} />
+                <input type="text" className="formData" name="job" onChange={handleChange} />
             </section>
             <section className="formInfor formUnberLine">
                 <div className="formLabel">
                     소속
                 </div>
-                <input type="text" className="formData" name="divison" onChange={handleChange} />
+                <input type="text" className="formData" name="company" onChange={handleChange} />
             </section>
             <section className="formInfor formUnberLine">
                 <div className="formLabel">
                     직급
                 </div>
-                <input type="text" className="formData" name="position" onChange={handleChange} />
+                <input type="text" className="formData" name="businessType" onChange={handleChange} />
             </section>
             <section className="formInfor formUnberLine">
                 <div className="formLabel">

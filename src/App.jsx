@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/callback" element={<Callback />} />
