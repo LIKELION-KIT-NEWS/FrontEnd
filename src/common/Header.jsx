@@ -29,7 +29,7 @@ const Header = () => {
         <button id="submit" type="submit">
           <img
             src={process.env.PUBLIC_URL + "/assets/search.png"}
-            style={{ width: "90%", cursor: "pointer" }}
+            style={{ width: "120%", cursor: "pointer" }}
             alt="submitBtn"
           />
         </button>
