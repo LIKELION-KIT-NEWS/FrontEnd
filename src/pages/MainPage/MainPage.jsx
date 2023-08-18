@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./../../common/Header";
 import Nav from "./components/navigation/Nav";
 
 const MainPage = () => {
+  const [data, setData] = useState([]);
   return (
     <div>
-      <Header />
-      <Nav />
+      <Header setData={setData} />
+      <Nav data={data} />
     </div>
   );
 };
