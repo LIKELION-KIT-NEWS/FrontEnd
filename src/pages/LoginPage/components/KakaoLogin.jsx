@@ -1,6 +1,5 @@
 import React from "react";
 import "../components/styles/KakaoLogin.css";
-//import { REST_API_KEY, REDIRECT_URL } from "./KakaoData";
 
 const KakaoLogin = () => {
   const KakaoAuothUrl = "http://49.50.163.215/api/login/kakao";
