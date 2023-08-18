@@ -2,14 +2,49 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import Menu from "./Menu";
-
-const Header = () => {
+import axios from "axios";
+const Header = ({ setData }) => {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJzrj5nqt6AiLCJ1aWQiOiJCT2ZRR0xIWGVDIiwidXNlclJvbGUiOiJST0xFX0VYUEVSVCIsImlhdCI6MTY5MjM4MjIyMCwiZXhwIjoxNjkyNDQyMjIwfQ.2WMlzEmICHhRTSapCdLiXpUi1yjl_QOUjlJxah-TvbM
+  `;
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+
+  const [search, setSearch] = useState({
+    title: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSearch((data) => ({
+      ...data,
+      [name]: value,
+    }));
+    console.log(search.title);
+  };
+
+  const clickSearch = () => {
+    axios
+      .get(`http://49.50.163.215/api/news/search/title/${search.title}`)
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleOpen = () => {
     setOpen((prev) => !prev);
   };
+
+  function enterKey(e) {
+    if (e.keyCode == 13) {
+      clickSearch();
+    }
+  }
 
   return (
     <div>
@@ -22,9 +57,11 @@ const Header = () => {
         />
         <input
           type="text"
-          id="headerInput"
-          name="headerInput"
+          id="title"
+          onChange={handleChange}
+          name="title"
           placeholder="제목을 입력하세요"
+          onKeyUp={enterKey}
         />
         <button id="submit" type="submit">
           <img
