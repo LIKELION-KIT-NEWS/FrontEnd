@@ -14,3 +14,7 @@
   display: block;
   padding: 0.8em 0 0.6em 0;
 }
+
+.loading {
+  margin-top: 50%;
+}

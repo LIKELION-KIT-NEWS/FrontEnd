@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import "./styles/ArticleItem.css";
 import ArticleComment from "./components/article-comment/ArticleComment";
@@ -6,10 +6,14 @@ import ArticleEmoji from "./components/article-emoji/ArticleEmoji";
 import axios from "axios";
 import ArticleTrust from "./components/article-trust/ArticleTrust";
 import ConfirmModal from "../confirmModal/ConfirmModal";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 
 const localhost = "http://49.50.163.215";
 
-const ArticleItem = ({ content, deleteView }) => {
+const ArticleItem = ({ content, deleteView, scrapView }) => {
+  console.log(deleteView, scrapView);
+  const [loading, setLoading] = useState(false);
+  const articleRef = useRef(null);
   const [view, setView] = useState(false);
   const [modal, setModal] = useState(false);
   const [emotion, setEmotion] = useState({
@@ -40,6 +44,31 @@ const ArticleItem = ({ content, deleteView }) => {
   const [commentWrite, setCommentWrite] = useState("");
 
   useEffect(() => {
+    if (view) {
+      setView(true);
+    } else {
+      setTimeout(() => {
+        setView(false);
+      }, 600);
+    }
+  }, [view]);
+
+  useEffect(() => {
+    const handleOutsideClose = (e) => {
+      if (view && !articleRef.current.contains(e.target)) setView(false);
+    };
+    document.addEventListener("click", handleOutsideClose);
+
+    return () => document.removeEventListener("click", handleOutsideClose);
+  }, [view]);
+
+  const handleClose = () => {
+    setView(false);
+  };
+
+  const handleOpen = () => {
+    setLoading(true);
+
     const headers = {
       "Content-Type": "application/json",
     };
@@ -51,41 +80,29 @@ const ArticleItem = ({ content, deleteView }) => {
       .get(`${localhost}/api/news/${content.newsId}/emotions`, headers)
       .then((res) => {
         setEmotion(res.data.data);
+        axios
+          .get(`${localhost}/api/news/${content.newsId}/comment`, headers)
+          .then((res) => {
+            console.log(res.data.data);
+            setComment(res.data.data);
+            axios
+              .get(`${localhost}/api/user-info`, headers)
+              .then((res) => {
+                setUser(res.data);
+                setLoading(false);
+                setView(true);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
       });
-    axios
-      .get(`${localhost}/api/news/${content.newsId}/comment`, headers)
-      .then((res) => {
-        console.log(res.data.data);
-        setComment(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    axios
-      .get(`${localhost}/api/user-info`, headers)
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (view) {
-      setView(true);
-    } else {
-      setTimeout(() => {
-        setView(false);
-      }, 600);
-    }
-  }, [view]);
-
-  const handleOpen = () => {
-    setView((prev) => !prev);
   };
 
   const handleModal = () => {
@@ -154,6 +171,7 @@ const ArticleItem = ({ content, deleteView }) => {
     <>
       {view ? (
         <div
+          ref={articleRef}
           className={`${
             view ? "article-item-fade-in" : "article-item-fade-out"
           }`}
@@ -162,7 +180,7 @@ const ArticleItem = ({ content, deleteView }) => {
             <span>{content.title}</span>
           </div>
           <div className="article-info">
-            <div className="article-scrap">
+            <div className="article-scrap" style={{ display: `${scrapView}` }}>
               <span onClick={handleScrap}>스크랩</span>
               {modal && (
                 <ConfirmModal
@@ -190,17 +208,19 @@ const ArticleItem = ({ content, deleteView }) => {
               <ArticleTrust emotion={emotion} />
             </div>
           </div>
-          {/* 전문가 여부가 true 면 댓글창 보임 */}
-          <div className="comment-write">
-            <input
-              value={commentWrite}
-              placeholder="댓글을 작성하세요"
-              onChange={(e) => {
-                setCommentWrite(e.target.value);
-              }}
-            ></input>
-            <button onClick={handleCommentWrite}>등록</button>
-          </div>
+          {user.expertState === "APPROVED" && (
+            <div className="comment-write">
+              <input
+                value={commentWrite}
+                placeholder="댓글을 작성하세요"
+                onChange={(e) => {
+                  setCommentWrite(e.target.value);
+                }}
+              ></input>
+              <button onClick={handleCommentWrite}>등록</button>
+            </div>
+          )}
+
           <div className="article-comment">
             {comment.map((item) => {
               return (
@@ -213,7 +233,7 @@ const ArticleItem = ({ content, deleteView }) => {
               );
             })}
           </div>
-          <div className="dropdown-container" onClick={handleOpen}>
+          <div className="dropdown-container" onClick={handleClose}>
             <span className="dropdown">
               <RiArrowDropUpLine size="2.5em" color="#325F95" />
             </span>
@@ -230,6 +250,7 @@ const ArticleItem = ({ content, deleteView }) => {
           </span>
         </div>
       )}
+      {loading && <LoadingSpinner />}
     </>
   );
 };
