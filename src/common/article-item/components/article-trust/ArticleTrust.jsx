@@ -12,8 +12,10 @@ import axios from "axios";
 const localhost = "http://49.50.163.215";
 const headers = {
   "Content-Type": "application/json",
-  Authorization: "Bearer " + localStorage.getItem("accessToken"),
 };
+axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+  "accessToken"
+)}`;
 
 const ArticleTrust = ({ emotion }) => {
   const [trust, setTrust] = useState({
@@ -35,10 +37,15 @@ const ArticleTrust = ({ emotion }) => {
         trustType: null,
         suspiciousNum: trust.suspiciousNum - 1,
       });
-      axios.delete(
-        `${localhost}/api/news/emotion/news/${emotion.newsId}/NEWS_TRUST_EMOTION`,
-        { headers: headers }
-      );
+      axios
+        .delete(
+          `${localhost}/api/news/emotion/news/${emotion.newsId}/NEWS_TRUST_EMOTION`,
+          headers
+        )
+        .then((res) => console.log(res))
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       if (trust.trustType !== null) {
         setModal(true);
@@ -48,10 +55,16 @@ const ArticleTrust = ({ emotion }) => {
           trustType: "SUSPICIOUS",
           suspiciousNum: trust.suspiciousNum + 1,
         });
-        axios.post(
-          `${localhost}/api/news/emotion/news/${emotion.newsId}/NEWS_TRUST_EMOTION/SUSPICIOUS`,
-          { headers: headers }
-        );
+        axios
+          .post(
+            `${localhost}/api/news/emotion/news/${emotion.newsId}/NEWS_TRUST_EMOTION/SUSPICIOUS`,
+            null,
+            headers
+          )
+          .then((res) => console.log(res))
+          .catch((err) => {
+            console.log(err);
+          });
       }
     }
   };
@@ -63,10 +76,15 @@ const ArticleTrust = ({ emotion }) => {
         trustType: null,
         trustNum: trust.trustNum - 1,
       });
-      axios.delete(
-        `${localhost}/api/news/emotion/news/${emotion.newsId}/NEWS_TRUST_EMOTION`,
-        { headers: headers }
-      );
+      axios
+        .delete(
+          `${localhost}/api/news/emotion/news/${emotion.newsId}/NEWS_TRUST_EMOTION`,
+          headers
+        )
+        .then((res) => console.log(res))
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       if (trust.trustType !== null) {
         setModal(true);
@@ -76,10 +94,18 @@ const ArticleTrust = ({ emotion }) => {
           trustType: "TRUSTWORTHY",
           trustNum: trust.trustNum + 1,
         });
-        axios.post(
-          `${localhost}/api/news/emotion/news/${emotion.newsId}/NEWS_TRUST_EMOTION/TRUSTWORTHY`,
-          { headers: headers }
-        );
+        axios
+          .post(
+            `${localhost}/api/news/emotion/news/${emotion.newsId}/NEWS_TRUST_EMOTION/TRUSTWORTHY`,
+            null,
+            headers
+          )
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     }
   };

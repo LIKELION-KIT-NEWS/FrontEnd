@@ -25,12 +25,41 @@
   cursor: pointer;
 }
 
-.article-item {
+@keyframes slide-fade-in {
+  0% {
+    transform: translateY(-3%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-fade-out {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-3%);
+  }
+}
+
+.article-item-fade-in,
+.article-item-fade-out {
   overflow: hidden;
   border: 1px solid #325f95;
   border-radius: 10px;
   margin-top: 1em;
   padding: 0 0.78em;
+}
+
+.article-item-fade-in {
+  animation: slide-fade-in 0.6s ease;
+}
+
+.article-item-fade-out {
+  animation: slide-fade-out 0.6s ease;
 }
 
 .article-title {

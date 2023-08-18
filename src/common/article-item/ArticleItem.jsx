@@ -9,68 +9,77 @@ import ArticleTrust from "./components/article-trust/ArticleTrust";
 const localhost = "http://49.50.163.215";
 const headers = {
   "Content-Type": "application/json",
-  Authorization: "Bearer " + localStorage.getItem("accessToken"),
 };
+
+axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+  "accessToken"
+)}`;
 
 const ArticleItem = ({ content, deleteView }) => {
   const [view, setView] = useState(false);
-  const [emotion, setEmotion] = useState({});
+  const [emotion, setEmotion] = useState({
+    newsId: 0,
+    emotionCounts: {
+      LIKE: 0,
+      DISLIKE: 0,
+    },
+    trustEmotionCounts: {
+      SUSPICIOUS: 0,
+      TRUSTWORTHY: 0,
+    },
+    userNewsEmotionInfo: {
+      userClickEmotionType: null,
+      userClicked: false,
+    },
+    userNewsTrustEmotionInfo: {
+      userClickEmotionType: null,
+      userClicked: false,
+    },
+  });
   const [comment, setComment] = useState([]);
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    nickname: "",
+  });
   const [commentWrite, setCommentWrite] = useState("");
 
   useEffect(() => {
-    // axios
-    //   .get(`${localhost}/api/news/${content.newsId}/emotions`, {
-    //     headers: headers,
-    //   })
-    //   .then((res) => {
-    //     setEmotion(res.data.data);
-    //   });
-    // axios
-    //   .get(`${localhost}/api/news/${content.newsId}/comment`, {
-    //     headers: headers,
-    //   })
-    //   .then((res) => {
-    //     setComment(res.data.data);
-    //   });
-    setEmotion({
-      newsId: 1,
-      emotionCounts: {
-        LIKE: 0,
-        DISLIKE: 0,
-      },
-      trustEmotionCounts: {
-        SUSPICIOUS: 0,
-        TRUSTWORTHY: 0,
-      },
-      userNewsEmotionInfo: {
-        userClickEmotionType: null,
-        userClicked: false,
-      },
-      userNewsTrustEmotionInfo: {
-        userClickEmotionType: null,
-        userClicked: false,
-      },
-    });
-    setComment([
-      {
-        commentId: 1,
-        expertUid: "JxGUSIA3ko",
-        expertProfileImage:
-          "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-        content: "Test",
-        expertName: "박준하",
-        emotionCounts: {
-          DISLIKE: 0,
-          LIKE: 0,
-        },
-        userEmotionInfo: {
-          userClickEmotionType: null,
-          userClicked: false,
-        },
-      },
-    ]);
+    axios
+      .get(`${localhost}/api/news/${content.newsId}/emotions`, headers)
+      .then((res) => {
+        setEmotion(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(`${localhost}/api/news/${content.newsId}/comment`, headers)
+      .then((res) => {
+        setComment(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(`${localhost}/api/user-info`, headers)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
+
+  useEffect(() => {
+    if (view) {
+      setView(true);
+    } else {
+      setTimeout(() => {
+        setView(false);
+      }, 600);
+    }
+  }, [view]);
 
   const handleOpen = () => {
     setView((prev) => !prev);
@@ -78,14 +87,21 @@ const ArticleItem = ({ content, deleteView }) => {
 
   const handleCommentWrite = () => {
     axios
-      .post(`${localhost}/api/news/${content.newsId}/comment`, {
-        content: commentWrite,
-      })
+      .post(
+        `${localhost}/api/news/${content.newsId}/comment`,
+        {
+          content: commentWrite,
+        },
+        headers
+      )
       .then(() => {
         axios
-          .get(`${localhost}/api/news/${content.newsId}/comment`)
+          .get(`${localhost}/api/news/${content.newsId}/comment`, headers)
           .then((res) => {
             setComment(res.data.data);
+          })
+          .catch((err) => {
+            console.log(err);
           });
       });
   };
@@ -93,7 +109,11 @@ const ArticleItem = ({ content, deleteView }) => {
   return (
     <>
       {view ? (
-        <div className="article-item">
+        <div
+          className={`${
+            view ? "article-item-fade-in" : "article-item-fade-out"
+          }`}
+        >
           <div className="article-title">
             <span>{content.title}</span>
           </div>
@@ -130,8 +150,8 @@ const ArticleItem = ({ content, deleteView }) => {
                 <ArticleComment
                   newsId={content.newsId}
                   item={item}
-                  comment={comment}
                   setComment={setComment}
+                  user={user}
                 />
               );
             })}

@@ -12,10 +12,12 @@ import axios from "axios";
 const localhost = "http://49.50.163.215";
 const headers = {
   "Content-Type": "application/json",
-  Authorization: "Bearer " + localStorage.getItem("accessToken"),
 };
+axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+  "accessToken"
+)}`;
 
-const ArticleComment = ({ newsId, item, comment, setComment }) => {
+const ArticleComment = ({ newsId, item, setComment, user }) => {
   const [thumbs, setThumbs] = useState({
     thumbsType: item.userEmotionInfo.userClickEmotionType,
     thumbsClick: item.userEmotionInfo.userClicked,
@@ -37,9 +39,15 @@ const ArticleComment = ({ newsId, item, comment, setComment }) => {
         thumbsType: null,
         thumbsUpNum: thumbs.thumbsUpNum - 1,
       });
-      axios.delete(`${localhost}/api/news/emotion/comment/${item.commentId}`, {
-        headers: headers,
-      });
+      axios
+        .delete(
+          `${localhost}/api/news/emotion/comment/${item.commentId}`,
+          headers
+        )
+        .then((res) => console.log(res.data))
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       if (thumbs.thumbsType !== null) {
         setModal(true);
@@ -52,9 +60,15 @@ const ArticleComment = ({ newsId, item, comment, setComment }) => {
         axios
           .post(
             `${localhost}/api/news/emotion/comment/${item.commentId}/LIKE`,
-            { headers: headers }
+            null,
+            headers
           )
-          .then((res) => {});
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     }
   };
@@ -66,9 +80,17 @@ const ArticleComment = ({ newsId, item, comment, setComment }) => {
         thumbsType: null,
         thumbsDownNum: thumbs.thumbsDownNum - 1,
       });
-      axios.delete(`${localhost}/api/news/emotion/comment/${item.commentId}`, {
-        headers: headers,
-      });
+      axios
+        .delete(
+          `${localhost}/api/news/emotion/comment/${item.commentId}`,
+          headers
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       if (thumbs.thumbsType !== null) {
         setModal(true);
@@ -81,9 +103,15 @@ const ArticleComment = ({ newsId, item, comment, setComment }) => {
         axios
           .post(
             `${localhost}/api/news/emotion/comment/${item.commentId}/DISLIKE`,
-            { headers: headers }
+            null,
+            headers
           )
-          .then((res) => {});
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     }
   };
@@ -99,25 +127,38 @@ const ArticleComment = ({ newsId, item, comment, setComment }) => {
       )
       .then(() =>
         axios
-          .get(`${localhost}/api/news/${newsId}/comment`, { headers: headers })
+          .get(`${localhost}/api/news/${newsId}/comment`, headers)
           .then((res) => {
             setComment(res.data.data);
           })
-      );
+          .catch((err) => {
+            console.log(err);
+          })
+      )
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const commentDelete = () => {
     axios
-      .delete(`${localhost}/api/news/${newsId}/comment/${item.commentId}`, {
-        headers: headers,
-      })
+      .delete(
+        `${localhost}/api/news/${newsId}/comment/${item.commentId}`,
+        headers
+      )
       .then(() =>
         axios
-          .get(`${localhost}/api/news/${newsId}/comment`, { headers: headers })
+          .get(`${localhost}/api/news/${newsId}/comment`, headers)
           .then((res) => {
             setComment(res.data.data);
           })
-      );
+          .catch((err) => {
+            console.log(err);
+          })
+      )
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -166,16 +207,18 @@ const ArticleComment = ({ newsId, item, comment, setComment }) => {
               </div>
               <span>{item.expertName}</span>
             </div>
-            <div className="comment-btn">
-              <span
-                onClick={() => {
-                  setUpdate(true);
-                }}
-              >
-                수정
-              </span>
-              <span onClick={commentDelete}>삭제</span>
-            </div>
+            {user.name === item.expertName && (
+              <div className="comment-btn">
+                <span
+                  onClick={() => {
+                    setUpdate(true);
+                  }}
+                >
+                  수정
+                </span>
+                <span onClick={commentDelete}>삭제</span>
+              </div>
+            )}
           </div>
           <span>{item.content}</span>
           <div className="comment-thumbs">
