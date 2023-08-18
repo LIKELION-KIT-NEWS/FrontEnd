@@ -46,6 +46,8 @@ const CertificateForm = () => {
         headers
         ).then((res)=>{
             console.log(res.data);
+            alert("전문가 신청 완료");
+            window.location.reload();
         }).catch((err)=>{
             console.log(err);
         })
