@@ -123,7 +123,7 @@ const AdminPage = () => {
     <div className="AdminPage">
       <Header />
       <ExpertApplicationContainer />
-      <ArticleContainer article={data} deleteView="block" />
+      <ArticleContainer article={data} deleteView="block" scrapView="none" />
     </div>
   );
 };
