@@ -13,7 +13,7 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
   "accessToken"
 )}`;
 
-const Nav = () => {
+const Nav = ({ data }) => {
   const [click, setClick] = useState({ value: "정치", valueEng: "POLITICS" });
   const [article, setArticle] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,6 +31,10 @@ const Nav = () => {
         console.log(err);
       });
   }, [click]);
+
+  useEffect(() => {
+    setArticle(data);
+  }, [data]);
 
   const menu = [
     { value: "정치", valueEng: "POLITICS" },
