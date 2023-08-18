@@ -6,8 +6,7 @@ import axios from "axios";
 const Header = ({ setData }) => {
   axios.defaults.headers.common[
     "Authorization"
-  ] = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJzrj5nqt6AiLCJ1aWQiOiJCT2ZRR0xIWGVDIiwidXNlclJvbGUiOiJST0xFX0VYUEVSVCIsImlhdCI6MTY5MjM4MjIyMCwiZXhwIjoxNjkyNDQyMjIwfQ.2WMlzEmICHhRTSapCdLiXpUi1yjl_QOUjlJxah-TvbM
-  `;
+  ] = `Bearer ${localStorage.getItem("accessToken")}`;
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
