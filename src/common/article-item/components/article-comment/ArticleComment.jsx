@@ -189,7 +189,7 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
                   alt="프로필 이미지"
                 />
               </div>
-              <span>{item.expertName}</span>
+              <span>{item.expertNickname}</span>
             </div>
           </div>
           <div className="comment-write" style={{ marginTop: "1em" }}>
@@ -220,7 +220,7 @@ const ArticleComment = ({ newsId, item, setComment, user }) => {
                   alt="프로필 이미지"
                 />
               </div>
-              <span>{item.expertName}</span>
+              <span>{item.expertNickname}</span>
             </div>
             {user.name === item.expertName && (
               <div className="comment-btn">

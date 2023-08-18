@@ -58,6 +58,7 @@ const ArticleItem = ({ content, deleteView }) => {
     axios
       .get(`${localhost}/api/news/${content.newsId}/comment`, headers)
       .then((res) => {
+        console.log(res.data.data);
         setComment(res.data.data);
       })
       .catch((err) => {
