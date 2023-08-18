@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import KakaoLogin from "./components/KakaoLogin";
 
 const LoginPage = () => {
-    return (
-        <div>
-            로그인
-        </div>
-    );
+  return (
+    <div>
+      <KakaoLogin />
+    </div>
+  );
 };
 
 export default LoginPage;

@@ -1,9 +1,7 @@
-import React,{useState,useEffect} from 'react';
-import Header from './../../common/Header';
-import ExpertApplicationContainer from './components/ExpertApplicationContainer';
-
-import ArticleContainer from "../../common/article-container/ArticleContainer";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import "./styles/ScrapData.css";
+import ArticleContainer from "../../../../common/article-container/ArticleContainer";
+import axios from "axios";
 
 const text = {
   expert: true, // 전문가 여부
@@ -102,12 +100,18 @@ const text = {
   ],
 };
 
-const AdminPage = () => {
-  const [data,setData] = useState([]);
-  axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("accessToken")}`;
-  
+const ScrapData = () => {
+  const [data, setData] = useState([]);
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${localStorage.getItem("accessToken")}`;
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+
   useEffect(()=>{
-    axios.get(`http://49.50.163.215/api/news/list/ALL`)
+    axios.get(`http://49.50.163.215/api/news/clip`,null,headers)
     .then((res)=>{
       console.log(res.data.data);
       setData(res.data.data);
@@ -117,16 +121,19 @@ const AdminPage = () => {
     })
   },[])
     return (
-        <div className="AdminPage">
-            <Header/>
-            <ExpertApplicationContainer/>
-            <ArticleContainer
+        <div className="ScrapData">
+            {/* 메인 게시글에서 사용한 템플릿 그대로 사용하기 */}
+            {
+              data.length===0?
+              "저장한 기사가 없어요":
+              <ArticleContainer
                 article={data}
-                deleteView="block"
-            />>
+                deleteView="none"
+            />  
+            }
+            
         </div>
     );
-
 };
 
-export default AdminPage;
+export default ScrapData;
